@@ -1,5 +1,6 @@
 import db from "../database/db.js";
 import { nanoid } from "nanoid";
+import bcrypt from "bcryptjs";
 
 export const getAllUsers = async () => {
   return db.data.users;
@@ -10,13 +11,17 @@ export const getUserById = async (id) => {
 };
 
 export const addUser = async (userData) => {
+  const hashedPassword = await bcrypt.hash(userData.password, 10);
+
   const newUser = {
     id: nanoid(),
-    ...userData,
+    name: userData.name,
+    email: userData.email,
+    password: hashedPassword,
   };
 
   db.data.users.push(newUser);
-  await db.write(); 
+  await db.write();
   return newUser;
 };
 
@@ -37,4 +42,3 @@ export const deleteUser = async (id) => {
   await db.write();
   return true;
 };
-

@@ -1,12 +1,13 @@
 import { Router } from "express";
 import { handleGetAllUsers, handleGetUserById, handleAddUser, handleUpdateUser, handleDeleteUser } from "../controllers/userController.js";
+import { authMiddleware } from "../middleware/middleware.js"
 
 const router = Router();
 
-router.get("/", handleGetAllUsers);
-router.get("/:id", handleGetUserById);
 router.post("/", handleAddUser);
-router.put("/:id", handleUpdateUser);
-router.delete("/:id", handleDeleteUser);
+router.get("/", authMiddleware, handleGetAllUsers);
+router.get("/:id", authMiddleware, handleGetUserById);
+router.put("/:id", authMiddleware, handleUpdateUser);
+router.delete("/:id", authMiddleware, handleDeleteUser);
 
 export default router;
