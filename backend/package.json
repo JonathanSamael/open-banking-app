@@ -17,7 +17,8 @@
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "json-server": "^1.0.0-beta.3",
-    "lowdb": "^7.0.1"
+    "lowdb": "^7.0.1",
+    "nanoid": "^5.1.6"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",
