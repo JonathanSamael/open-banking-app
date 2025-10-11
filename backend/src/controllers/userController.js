@@ -38,7 +38,7 @@ export const handleGetUserById = async (req, res) => {
 export const handleAddUser = async (req, res) => {
   try {
     const userData = req.body;
-    if (!userData.name || !userData.email) {
+    if (!userData.name || !userData.email || !userData.password) {
       return res.status(400).json({ message: "Erro ao adicionar usuário, Dados incompletos" });
     }
 
@@ -54,6 +54,11 @@ export const handleAddUser = async (req, res) => {
 export const handleUpdateUser = async (req, res) => {
   try {
     const { id } = req.params;
+
+    if (req.user.id !== id) {
+      return res.status(403).json({ error: "Você não pode atualizar outro usuário" });
+    }
+
     const updates = req.body;
     const updatedUser = await updateUser(id, updates);
 

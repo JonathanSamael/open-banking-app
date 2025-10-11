@@ -1,9 +1,10 @@
 {
   "users": [
     {
-      "id": "ei6o39Vbxm5MczhT7jN00",
-      "name": "Person",
-      "email": "new@test.com"
+      "id": "KthYrsOmXWac7fZTblVvl",
+      "name": "person2",
+      "email": "email@test.com",
+      "password": "$2b$10$QGeHtfLRUJVSuZRhJ.jXDed9X8QHQVEnNcEFduRYmpWDXGHzniOr."
     }
   ]
 }
