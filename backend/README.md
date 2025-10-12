@@ -30,6 +30,14 @@ Servidor padrão:
 
 > http://localhost:3030/api
 
+### Configuração .env
+
+Adicione o arquivo .env na raiz da pasta backend/ com as configurações:
+```
+PORT=3030
+JWT_SECRET= <defina uma jwt-secret>
+
+```
 ---
 
 ## **Autenticação**
