@@ -1,15 +1,9 @@
-import {
-  getAllUsers,
-  getUserById,
-  addUser,
-  updateUser,
-  deleteUser
-} from "../services/userService.js";
+import * as userService from "../services/userService.js";
 
 // GET /users
 export const handleGetAllUsers = async (req, res) => {
   try {
-    const users = await getAllUsers();
+    const users = await userService.getAllUsers();
     res.status(200).json(users);
   } catch (error) {
     const status = error.status || 500;
@@ -21,7 +15,7 @@ export const handleGetAllUsers = async (req, res) => {
 export const handleGetUserById = async (req, res) => {
   try {
     const { id } = req.params;
-    const user = await getUserById(id);
+    const user = await userService.getUserById(id);
 
     if (!user) {
       return res.status(404).json({ message: `Erro ao buscar usuário, Usuário não encontrado` });
@@ -42,7 +36,7 @@ export const handleAddUser = async (req, res) => {
       return res.status(400).json({ message: "Erro ao adicionar usuário, Dados incompletos" });
     }
 
-    const newUser = await addUser(userData);
+    const newUser = await userService.addUser(userData);
     res.status(201).json({ message: "Usuário adicionado com sucesso!", newUser });
   } catch (error) {
     const status = error.status || 500;
@@ -60,7 +54,7 @@ export const handleUpdateUser = async (req, res) => {
     }
 
     const updates = req.body;
-    const updatedUser = await updateUser(id, updates);
+    const updatedUser = await userService.updateUser(id, updates);
 
     if (!updatedUser) {
       return res.status(404).json({ message: `Erro ao atualizar usuário, Usuário não encontrado` });
@@ -76,8 +70,8 @@ export const handleUpdateUser = async (req, res) => {
 // DELETE /users/:id
 export const handleDeleteUser = async (req, res) => {
   try {
-    const { id } = req.params;
-    const deleted = await deleteUser(id);
+    const id = req.params;
+    const deleted = await userService.deleteUser(id);
 
     if (!deleted) {
       return res.status(404).json({ message: `Erro ao deletar usuário, Usuário não encontrado` });
