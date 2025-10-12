@@ -12,9 +12,26 @@
       "id": "N9tr-BkNibSHl5n4kNMW3",
       "userId": "KthYrsOmXWac7fZTblVvl",
       "type": "corrente",
-      "balance": 0,
+      "balance": 400,
       "createdAt": "2025-10-12T00:29:32.097Z"
+    },
+    {
+      "id": "-Vd5akd6thooOWxTjBL6c",
+      "userId": "KthYrsOmXWac7fZTblVvl",
+      "type": "corrente",
+      "balance": 400,
+      "createdAt": "2025-10-12T18:50:35.844Z"
     }
   ],
-  "transactions": []
+  "transactions": [
+    {
+      "id": "vuKsZjiFYr8PQXX5uxi1W",
+      "accountId": "N9tr-BkNibSHl5n4kNMW3",
+      "type": "transfer",
+      "amount": 100,
+      "description": "Transferência para conta poupança",
+      "toAccountId": "-Vd5akd6thooOWxTjBL6c",
+      "date": "2025-10-12T19:07:28.098Z"
+    }
+  ]
 }

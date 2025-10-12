@@ -1,7 +1,7 @@
 import * as accountService from "../services/accountService.js";
 
 //POST /accunts
-export const handlecreateAccount = async (req, res) => {
+export const handleCreateAccount = async (req, res) => {
   try {
     const { userId, type } = req.body;
 
