@@ -1,6 +1,7 @@
-import db from "../database/db.js";
-import { nanoid } from "nanoid";
 import bcrypt from "bcryptjs";
+import db from "../database/db.js";
+import { deleteFromDb } from "./utils/deleteFromDb.js";
+import { nanoid } from "nanoid";
 
 export const getAllUsers = async () => {
   return db.data.users;
@@ -34,11 +35,4 @@ export const updateUser = async (id, updates) => {
   return db.data.users[index];
 };
 
-export const deleteUser = async (id) => {
-  const initialLength = db.data.users.length;
-  db.data.users = db.data.users.filter((user) => user.id !== id);
-  if (db.data.users.length === initialLength) return false;
-
-  await db.write();
-  return true;
-};
+export const deleteUser = (id) => deleteFromDb("users", id);
