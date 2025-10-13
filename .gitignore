@@ -1,18 +1,54 @@
+# Arquivos do Sistema Operacional e de Miniaturas
 .DS_Store
 Thumbs.db
+
+# Arquivos temporários, de log e backup
 *.log
 *.tmp
 *.swp
 *.swo
 *.bak
 *.orig
+*.temp
+*.old
+*.backup
+*.lcov
+*.pid
+*.seed
+*.pid.lock
+
+# Ambientes e Configurações de Editores
 .env
 .env.*
-!.env.example
+!.env.example # Não ignorar o arquivo de exemplo
 .vscode/
 .idea/
 *.iml
+*.ipr
+*.iws
 *.code-workspace
+.atom/
+.history
+.svn/
+.buildlog/
+migrate_working_dir/
+
+# Outputs de build comuns e caches
+dist/
+build/
+coverage/
+.tmp/
+.cache/
+logs/
+.build/
+test-results/
+reports/
+
+# Arquivos diversos
+*.class
+*.pyc
+app.*.symbols
+app.*.map.json
 
 node_modules/
 npm-debug.log*
@@ -20,42 +56,40 @@ yarn-debug.log*
 yarn-error.log*
 package-lock.json
 pnpm-lock.yaml
-dist/
-build/
-coverage/
-.tmp/
-.cache/
-logs/
-*.pid
-*.seed
-*.pid.lock
-
 *.tsbuildinfo
 tsconfig.tsbuildinfo
 
-
+# Armazenamento de dados
 uploads/
 public/uploads/
 storage/
 
-
+# Arquivos e pastas do Dart/Pub
+.pub-cache/
+.pub/
 .dart_tool/
-.flutter-plugins
-.flutter-plugins-dependencies
 .packages
 pubspec.lock
-build/
+
+# Arquivos e pastas do Flutter
+**/doc/api/
 .flutter-plugins
 .flutter-plugins-dependencies
 generated_plugin_registrant.dart
+**/ios/Flutter/.last_build_id
 
+# Android
 **/android/.gradle/
 **/android/local.properties
 **/android/app/key.properties
 **/android/key.jks
 **/android/key.properties
 **/android/app/google-services.json
+/android/app/debug/
+/android/app/profile/
+/android/app/release/
 
+# iOS
 **/ios/Flutter/Flutter.framework/
 **/ios/Flutter/Flutter.podspec
 **/ios/Flutter/Generated.xcconfig
@@ -67,21 +101,11 @@ generated_plugin_registrant.dart
 **/ios/Runner.xcworkspace/
 **/ios/Runner/GoogleService-Info.plist
 **/ios/build/
+.swiftpm/
 
+# Plataformas web, desktop
 **/web/.dart_tool/
-**/web/build/
-
-**/windows/build/
-**/linux/build/
-**/macos/build/
-
-coverage/
-test-results/
-reports/
-*.lcov
-
-*.bak
-*.tmp
-*.temp
-*.old
-*.backup
+**/web/build/ # Duplicado, mas mantido para clareza de escopo
+**/windows/build/ # Duplicado, mas mantido para clareza de escopo
+**/linux/build/ # Duplicado, mas mantido para clareza de escopo
+**/macos/build/ # Duplicado, mas mantido para clareza de escopo
