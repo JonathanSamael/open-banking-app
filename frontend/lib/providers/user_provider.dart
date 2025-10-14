@@ -24,17 +24,17 @@ class UsersNotifier extends AsyncNotifier<UserModel?> {
     return null;
   }
 
-  Future<void> refreshUser({
+  Future<UserModel?> getUserById({
     required String id,
   }) async {
     state = const AsyncLoading();
     try {
-      final user = await _repository.getUserById(
-        id: id,
-      );
+      final user = await _repository.getUserById(id: id);
       state = AsyncData(user);
+      return user;
     } catch (e, st) {
       state = AsyncError(e, st);
+      return null;
     }
   }
 
@@ -46,7 +46,6 @@ class UsersNotifier extends AsyncNotifier<UserModel?> {
       state = AsyncError(e, st);
     }
   }
-
 
   Future<void> deleteUser(String token, String id) async {
     try {

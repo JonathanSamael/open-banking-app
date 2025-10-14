@@ -15,7 +15,7 @@ class ApiClient {
       'Content-Type': 'application/json',
     };
     if (authToken != null && authToken.isNotEmpty) {
-      headers['Authorization'] = 'Bearer $authToken';
+      headers['Authorization'] = authToken.startsWith('Bearer ') ? authToken : 'Bearer $authToken';
     }
     return headers;
   }

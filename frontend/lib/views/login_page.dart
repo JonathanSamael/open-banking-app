@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:open_banking_app/providers/login_provider.dart';
@@ -165,13 +163,14 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       final loggedUser = ref.read(loginProvider);
                       if (loggedUser.value != null) {
                         final userId = loggedUser.value!.user.id;
+                        final token = loggedUser.value!.token;
 
-                        await ref
+                        final userData = await ref
                             .read(usersProvider.notifier)
-                            .refreshUser(id: userId);
+                            .getUserById(id: userId,);
 
-                        final userData = ref.read(usersProvider).value;
-                        print('Usuário carregado: ${userData}');
+                        print('Usuário carregado: ${userData} $token');
+
                         if (loggedUser.value != null && mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
