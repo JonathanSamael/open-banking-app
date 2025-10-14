@@ -9,6 +9,9 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final userState = ref.watch(usersProvider);
+    final loggedUser = ref.watch(loginProvider);
+    
+    print(userState.value!.name);
 
     return Scaffold(
       appBar: AppBar(
