@@ -16,11 +16,10 @@ final accountRepositoryProvider = Provider<AccountRepository>((ref) {
 });
 
 class AccountNotifier extends AsyncNotifier<AccountModel?> {
-  late final AccountRepository _repository;
+   AccountRepository get _repository => ref.watch(accountRepositoryProvider);
 
   @override
   FutureOr<AccountModel?> build() async {
-    _repository = ref.watch(accountRepositoryProvider);
     return null;
   }
 

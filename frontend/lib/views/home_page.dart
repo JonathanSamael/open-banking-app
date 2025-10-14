@@ -13,7 +13,7 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(userProvider);
-    final account = ref.watch(accountProvider);
+    final accountAsync = ref.watch(accountProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -31,16 +31,24 @@ class HomePage extends ConsumerWidget {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            AccountCard(account: account.value!),
-            const SizedBox(height: 20),
-            ActionButtons(accountId: account.value!.id),
-          ],
-        ),
+      body: accountAsync.when(
+        data: (account) {
+          if (account == null) {
+            return const Center(child: Text('Nenhuma conta encontrada'));
+          }
+          return Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              children: [
+                AccountCard(account: account),
+                const SizedBox(height: 20),
+                ActionButtons(accountId: account.id),
+              ],
+            ),
+          );
+        },
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (e, st) => Center(child: Text('Erro: $e $st')),
       ),
     );
   }
