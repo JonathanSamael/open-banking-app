@@ -24,18 +24,20 @@ class AccountRepository {
     }
   }
 
-  Future<AccountModel> getAccountById({
-    required String token,
-    required String id,
-  }) async {
-    final response = await client.get('/accounts/$id', authToken: token);
+  Future<AccountModel> getAccountById({required String id}) async {
+    try {
+      final response = await client.get('/accounts/$id', authToken: token);
 
-    if (response.statusCode == 200) {
-      return AccountModel.fromJson(jsonDecode(response.body));
-    } else {
-      throw Exception(
-        'Erro ao buscar conta $id. Status: ${response.statusCode}',
-      );
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> jsonData = jsonDecode(response.body);
+        return AccountModel.fromJson(jsonData);
+      } else {
+        throw Exception(
+          'Erro ao buscar conta $id. Status: ${response.statusCode}',
+        );
+      }
+    } on Exception catch (e) {
+      throw Exception('Falha na requisição getAccountById: $e');
     }
   }
 

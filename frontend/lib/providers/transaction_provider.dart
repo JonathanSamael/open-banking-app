@@ -1,13 +1,19 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:open_banking_app/providers/login_provider.dart';
 import '../models/transaction_model.dart';
 import '../repositories/transaction_repository.dart';
 import 'api_provider.dart';
 
-final transactionRepositoryProvider = Provider<TransactionRepository>(
-  (ref) => TransactionRepository(ref.watch(apiClientProvider)),
-);
+final transactionRepositoryProvider = Provider<TransactionRepository>((ref) {
+  final client = ref.watch(apiClientProvider);
+  final login = ref.watch(loginProvider);
+
+  final token = login.value?.token;
+
+  return TransactionRepository(client, token);
+});
 
 class TransactionsNotifier extends AsyncNotifier<List<TransactionModel>> {
   late final TransactionRepository _repository;
@@ -18,21 +24,20 @@ class TransactionsNotifier extends AsyncNotifier<List<TransactionModel>> {
     return [];
   }
 
-  Future<void> getAllTransactions(String token) async {
+  Future<void> getAllTransactions() async {
     state = const AsyncLoading();
     try {
-      final transactions = await _repository.getAllTransactions(token: token);
+      final transactions = await _repository.getAllTransactions();
       state = AsyncData(transactions);
     } catch (e, st) {
       state = AsyncError(e, st);
     }
   }
 
-  Future<void> getTransactionByAccount(String token, String accountId) async {
+  Future<void> getTransactionByAccount(String accountId) async {
     state = const AsyncLoading();
     try {
       final transactions = await _repository.getTransactionByAccount(
-        token: token,
         accountId: accountId,
       );
       state = AsyncData(transactions);
@@ -42,12 +47,10 @@ class TransactionsNotifier extends AsyncNotifier<List<TransactionModel>> {
   }
 
   Future<void> createTransaction(
-    String token,
-    Map<String, dynamic> body,
+    {required Map<String, dynamic> body}
   ) async {
     try {
       final newTransaction = await _repository.createTransaction(
-        token: token,
         body: body,
       );
       state.whenData((list) {

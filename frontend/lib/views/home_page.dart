@@ -1,42 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:open_banking_app/providers/account_provider.dart';
 import 'package:open_banking_app/providers/login_provider.dart';
 import 'package:open_banking_app/providers/user_provider.dart';
+import 'package:open_banking_app/views/login_page.dart';
+import 'package:open_banking_app/views/widgets/account_card.dart';
+import 'package:open_banking_app/views/widgets/action_buttons.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userState = ref.watch(usersProvider);
-    final loggedUser = ref.watch(loginProvider);
-    
-    print(userState.value!.name);
+    final user = ref.watch(userProvider);
+    final account = ref.watch(accountProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Área Autenticada'),
+        title: Text('Olá, ${user.value!.name}'),
         actions: [
           IconButton(
-            icon: const Icon(Icons.logout),
+            icon: Icon(Icons.logout),
             onPressed: () {
               ref.read(loginProvider.notifier).logout();
-              Navigator.pushReplacementNamed(context, '/');
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (_) => const LoginPage()),
+              );
             },
           ),
         ],
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          userState.when(
-            data: (user) => user == null
-                ? const Text('Nenhum usuário logado')
-                : Text('Olá, ${user.name}'),
-            loading: () => const CircularProgressIndicator(),
-            error: (err, _) => Text('Erro: $err'),
-          ),
-        ],
+      body: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            AccountCard(account: account.value!),
+            const SizedBox(height: 20),
+            ActionButtons(accountId: account.value!.id),
+          ],
+        ),
       ),
     );
   }

@@ -36,7 +36,7 @@ class LoginNotifier extends AsyncNotifier<LoginModel?> {
     }
   }
 
-  void logout() {
+  logout() {
     state = const AsyncData(null);
   }
 

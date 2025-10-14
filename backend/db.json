@@ -9,18 +9,11 @@
   ],
   "accounts": [
     {
-      "id": "N9tr-BkNibSHl5n4kNMW3",
+      "id": "BrGJqnYFFsDYjX19zgCk4",
       "userId": "KthYrsOmXWac7fZTblVvl",
       "type": "corrente",
-      "balance": 400,
-      "createdAt": "2025-10-12T00:29:32.097Z"
-    },
-    {
-      "id": "-Vd5akd6thooOWxTjBL6c",
-      "userId": "KthYrsOmXWac7fZTblVvl",
-      "type": "corrente",
-      "balance": 400,
-      "createdAt": "2025-10-12T18:50:35.844Z"
+      "balance": 0,
+      "createdAt": "2025-10-14T17:45:29.394Z"
     }
   ],
   "transactions": [
