@@ -57,6 +57,6 @@ class UsersNotifier extends AsyncNotifier<UserModel?> {
   }
 }
 
-final usersProvider = AsyncNotifierProvider<UsersNotifier, UserModel?>(
+final userProvider = AsyncNotifierProvider<UsersNotifier, UserModel?>(
   UsersNotifier.new,
 );

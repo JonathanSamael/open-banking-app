@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:open_banking_app/providers/account_provider.dart';
 import 'package:open_banking_app/providers/login_provider.dart';
 import 'package:open_banking_app/providers/user_provider.dart';
 import 'package:open_banking_app/utils/app_colors.dart';
@@ -136,60 +139,21 @@ class _LoginPageState extends ConsumerState<LoginPage> {
               const SizedBox(height: 32),
               loginState.when(
                 loading: () => const CircularProgressIndicator(),
-                error: (err, _) => Text('Erro: $err'),
-                data: (_) => ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: AppColors.primaryColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    minimumSize: Size(120, 50),
-                    padding: const EdgeInsets.symmetric(vertical: 12),
-                    textStyle: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    elevation: 0.0,
-                  ),
-                  onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      await ref
-                          .read(loginProvider.notifier)
-                          .login(
-                            email: _emailController.text,
-                            password: _passwordController.text,
-                          );
+                error: (err, _) {
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("Erro: Tente novamente!"),
+                        backgroundColor: AppColors.errorColor,
+                        duration: Durations.extralong1,
+                      ),
+                    );
+                  });
 
-                      final loggedUser = ref.read(loginProvider);
-                      if (loggedUser.value != null) {
-                        final userId = loggedUser.value!.user.id;
-                        final token = loggedUser.value!.token;
-
-                        final userData = await ref
-                            .read(usersProvider.notifier)
-                            .getUserById(id: userId,);
-
-                        print('Usuário carregado: ${userData} $token');
-
-                        if (loggedUser.value != null && mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                'Login bem-sucedido: ${loggedUser.value!.user.email}',
-                              ),
-                            ),
-                          );
-
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (_) => const HomePage()),
-                          );
-                        }
-                      }
-                    }
-                  },
-                  child: const Text('Entrar'),
-                ),
+                  // Mostra o botão mesmo em caso de erro
+                  return _buildLoginButton(context, ref);
+                },
+                data: (_) => _buildLoginButton(context, ref),
               ),
               SizedBox(height: 40),
               TextButton(
@@ -208,6 +172,67 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildLoginButton(BuildContext context, WidgetRef ref) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        foregroundColor: AppColors.primaryColor,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+        minimumSize: Size(120, 50),
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+        elevation: 0.0,
+      ),
+      onPressed: () async {
+        if (_formKey.currentState!.validate()) {
+          await ref
+              .read(loginProvider.notifier)
+              .login(
+                email: _emailController.text,
+                password: _passwordController.text,
+              );
+
+          final loggedUser = ref.read(loginProvider);
+          if (loggedUser.value != null) {
+            final userId = loggedUser.value!.user.id;
+            final token = loggedUser.value!.token;
+
+            final user = await ref
+                .read(userProvider.notifier)
+                .getUserById(id: userId);
+            final account = await ref
+                .read(accountProvider.notifier)
+                .getAccountById(id: userId);
+
+            print(user);
+            print(account);
+
+            final accountData = ref.read(accountProvider);
+
+            print('Usuário carregado: ${accountData} $token');
+
+            if (loggedUser.value != null && mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    'Login bem-sucedido: ${loggedUser.value!.user.email}',
+                    style: TextStyle(color: AppColors.textColorBlack),
+                  ),
+                  backgroundColor: AppColors.successColor,
+                ),
+              );
+
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (_) => const HomePage()),
+              );
+            }
+          }
+        }
+      },
+      child: const Text('Entrar'),
     );
   }
 }

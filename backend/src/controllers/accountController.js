@@ -8,24 +8,33 @@ export const handleCreateAccount = async (req, res) => {
     const validTypes = ["corrente", "poupança"];
     if (!validTypes.includes(type)) {
       return res.status(400).json({
-        message: `Erro ao criar conta: tipo inválido. Tipos aceitos: ${validTypes.join(
-          ", "
-        )}.`,
+        message: `Erro ao criar conta: tipo inválido. Tipos aceitos: ${validTypes.join(", ")}.`,
       });
     }
-    const account = await accountService.createAccount(userId, type);
-    res.status(201).json(account);
+
+    const result = await accountService.createAccount(userId, type);
+
+    if (result.alreadyExists) {
+      return res.status(200).json({
+        message: "Conta já existente para este usuário.",
+        account: result.account,
+      });
+    }
+
+    res.status(201).json(result.account);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
 //GET /accounts/:id
 export const handleGetAccountById = async (req, res) => {
-  try {
+   try {
     const { id } = req.params;
-    const account = await accountService.getAccountById(id);
-    res.json(account);
+
+    const accounts = await accountService.getAccountById(id);
+
+    res.status(200).json(accounts);
   } catch (error) {
     res.status(404).json({ message: error.message });
   }

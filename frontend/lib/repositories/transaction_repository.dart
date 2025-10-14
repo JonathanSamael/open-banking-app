@@ -5,25 +5,24 @@ import '../models/transaction_model.dart';
 
 class TransactionRepository {
   final ApiClient client;
+  final String? token;
 
-  TransactionRepository(this.client);
+  TransactionRepository(this.client, this.token);
 
-  Future<List<TransactionModel>> getAllTransactions({required String token}) async {
-    final response = await client.get(
-      '/transactions',
-      authToken: token,
-    );
+  Future<List<TransactionModel>> getAllTransactions() async {
+    final response = await client.get('/transactions', authToken: token);
 
     if (response.statusCode == 200) {
       final List<dynamic> data = jsonDecode(response.body)['transactions'];
       return data.map((json) => TransactionModel.fromJson(json)).toList();
     } else {
-      throw Exception('Erro ao buscar transações. Status: ${response.statusCode}');
+      throw Exception(
+        'Erro ao buscar transações. Status: ${response.statusCode}',
+      );
     }
   }
 
   Future<List<TransactionModel>> getTransactionByAccount({
-    required String token,
     required String accountId,
   }) async {
     final response = await client.get(
@@ -43,7 +42,6 @@ class TransactionRepository {
   }
 
   Future<TransactionModel> createTransaction({
-    required String token,
     required Map<String, dynamic> body,
   }) async {
     final response = await client.post(
@@ -65,10 +63,7 @@ class TransactionRepository {
     required String token,
     required String id,
   }) async {
-    final response = await client.delete(
-      '/transactions/$id',
-      authToken: token,
-    );
+    final response = await client.delete('/transactions/$id', authToken: token);
 
     if (response.statusCode != 200 && response.statusCode != 204) {
       throw Exception(
