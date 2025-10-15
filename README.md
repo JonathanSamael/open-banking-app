@@ -55,16 +55,40 @@ npm run dev
 
 > Para mais detalhes acesse o README.md dentro do projeto backend;
 
+- Documentação do **Backend**:
+  **[Clique para ver os detalhes de instalação e uso](backend/README.md)**
+
 ---
 
 ## Frontend
 
 O frontend está localizado na pasta `frontend/`.
 
----
+Arquitetura em Camadas com Padrão Repository e Gerenciamento de Estado via Provider.
 
-- Documentação do **Backend**:
-  **[Clique para ver os detalhes de instalação e uso](backend/README.md)**
+- Telas de **Login**, **Cadastro** e **Home**
+- Gerenciamento de estado com Riverpod
+- Estrutura de camadas: Core → Providers → Repositories → views
+
+#### **Camadas do Projeto - Frontend**
+
+```
+Frontend/
+   lib/
+        ├── core/           → client HTTP
+        ├── models/         → models para lidar com os dados do backend gerenciados com flutter_riverpod
+        ├── providers/      → requisições de chamadas para as views
+        ├── repositories/   → métodos de busca e fonte de dados para os providers
+        ├── utils/          → arquivos genéricos
+        ├── views/          → telas do app
+        ├── app.dart
+        └── main.dart
+        pubspec.yaml
+        README.md
+```
+
+> Para mais detalhes acesse o README.md dentro do projeto frontend;
+
 
 - Documentação do **Frontend**:
   **[Clique para ver as instruções do front-end](frontend/README.md)**
