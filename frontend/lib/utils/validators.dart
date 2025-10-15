@@ -17,7 +17,7 @@ class Validators {
     if (!hasUppercase) return 'A senha precisa de uma letra maiúscula';
     if (!hasDigits) return 'A senha precisa de ao menos um número';
     if (!hasSpecialChar) return 'A senha precisa de um caractere especial';
-    if (!hasMinLength) return 'A senha precisa de no mínimo 7 caracteres';
+    if (!hasMinLength) return 'A senha precisa de no mínimo 6 caracteres';
 
     return null;
   }

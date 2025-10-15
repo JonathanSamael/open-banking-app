@@ -40,6 +40,16 @@ JWT_SECRET= <defina uma jwt-secret>
 ```
 ---
 
+### Login
+
+O ``db.json`` já possui um usuário de testes cadastrado, caso queira verificar basta usar a seguinte autenticação:
+```
+email: email@test.com
+senha: 123456
+```
+
+---
+
 ## **Autenticação**
 
 A autenticação é feita via **JWT Token**.  
@@ -63,9 +73,14 @@ Authorization: Bearer <seu_token_aqui>
 {
   "name": "Maria Silva",
   "email": "maria@email.com",
-  "password": "123456"
+  "password": "Abcd@123"
 }
 ```
+> Uma nova validação de senha foi criada, agora a senha precisa ter: 
+ - ao menos 6 dígitos;
+ - Uma letra maiúscula;
+ - Ao menos um número;
+ - Um caractere especial; 
 
 **Resposta 201**
 
