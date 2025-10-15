@@ -19,17 +19,17 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  bool isHidden = true;
+
+  void togglePasswordView() {
+    setState(() {
+      isHidden = !isHidden;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final loginState = ref.watch(loginProvider);
-    bool isHidden = true;
-
-    void togglePasswordView() {
-      setState(() {
-        isHidden = !isHidden;
-      });
-    }
 
     return Scaffold(
       backgroundColor: AppColors.backgroundColorDark,
@@ -67,8 +67,15 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     decoration: inputDecoration(
                       icon: Icons.lock_outline_rounded,
                       label: 'Senha',
+                      suffixIcon: InkWell(
+                        onTap: togglePasswordView,
+                        child: Icon(
+                          isHidden ? Icons.visibility : Icons.visibility_off,
+                          color: AppColors.inputElements,
+                        ),
+                      ),
                     ),
-                    obscureText: true,
+                    obscureText: isHidden,
                     validator: (value) => value == null || value.isEmpty
                         ? 'Informe a senha'
                         : null,
@@ -146,10 +153,12 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           final loggedUser = ref.read(loginProvider);
           if (loggedUser.value != null) {
             final userId = loggedUser.value!.user.id;
+            final token = loggedUser.value?.token;
 
-            await ref.read(userProvider.notifier).getUserById(id: userId);
+            await ref
+                .read(userProvider.notifier)
+                .getUserById(token: token, id: userId);
             await ref.read(accountProvider.notifier).getAccountById(id: userId);
-            ref.read(accountProvider);
 
             if (loggedUser.value != null && mounted) {
               ScaffoldMessenger.of(context).showSnackBar(

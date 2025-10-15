@@ -50,11 +50,15 @@ class UsersNotifier extends AsyncNotifier<UserModel?> {
 
   Future<void> deleteUser(String token, String id) async {
     try {
-      await _repository.deleteUser(id: id);
+      await _repository.deleteUser(token, id: id);
       state = const AsyncData(null);
     } catch (e, st) {
       state = AsyncError(e, st);
     }
+  }
+
+  void clear() {
+    state = const AsyncData(null);
   }
 }
 

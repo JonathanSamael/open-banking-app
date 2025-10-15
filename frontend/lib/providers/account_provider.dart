@@ -45,13 +45,17 @@ class AccountNotifier extends AsyncNotifier<AccountModel?> {
     }
   }
 
-  Future<void> deleteAccount(String token, String id) async {
+  Future<void> deleteAccount(String id) async {
     try {
-      await _repository.deleteAccount(token: token, id: id);
+      await _repository.deleteAccount(id: id);
       state = const AsyncData(null);
     } catch (e, st) {
       state = AsyncError(e, st);
     }
+  }
+
+  void clear() {
+    state = const AsyncData(null);
   }
 }
 
