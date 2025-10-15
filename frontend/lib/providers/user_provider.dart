@@ -25,11 +25,12 @@ class UsersNotifier extends AsyncNotifier<UserModel?> {
   }
 
   Future<UserModel?> getUserById({
+    String? token,
     required String id,
   }) async {
     state = const AsyncLoading();
     try {
-      final user = await _repository.getUserById(id: id);
+      final user = await _repository.getUserById(token, id: id);
       state = AsyncData(user);
       return user;
     } catch (e, st) {
@@ -38,7 +39,7 @@ class UsersNotifier extends AsyncNotifier<UserModel?> {
     }
   }
 
-  Future<void> addUser(String token, Map<String, dynamic> body) async {
+  Future<void> addUser(Map<String, dynamic> body) async {
     try {
       final newUser = await _repository.createUser(body: body);
       state = AsyncData(newUser);

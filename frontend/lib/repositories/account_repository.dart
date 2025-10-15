@@ -9,6 +9,7 @@ class AccountRepository {
   AccountRepository(this.client, this.token);
 
   Future<AccountModel> createAccount({
+    String? token,
     required Map<String, dynamic> body,
   }) async {
     final response = await client.post(

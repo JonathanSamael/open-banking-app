@@ -7,10 +7,10 @@
       "password": "$2b$10$QGeHtfLRUJVSuZRhJ.jXDed9X8QHQVEnNcEFduRYmpWDXGHzniOr."
     },
     {
-      "id": "0ZPCQRj8LXcAWRP6bDlaq",
-      "name": "person3",
-      "email": "person@test.com",
-      "password": "$2b$10$4oi8QObpHOyLWHFa0ARpwOGX9z/Y0AIXhmJJlgRRAzUch4lapPEc6"
+      "id": "A-ErMieEmahQy1FszRfuT",
+      "name": "John",
+      "email": "john@email.com",
+      "password": "$2b$10$dybs5tad7PhLU1jiDl4ogeLBhXcJV/LsTPW/wkHHfpi/oMcsauU/y"
     }
   ],
   "accounts": [
@@ -18,7 +18,7 @@
       "id": "BrGJqnYFFsDYjX19zgCk4",
       "userId": "KthYrsOmXWac7fZTblVvl",
       "type": "corrente",
-      "balance": 50,
+      "balance": 80,
       "createdAt": "2025-10-14T17:45:29.394Z"
     },
     {
@@ -27,36 +27,16 @@
       "type": "corrente",
       "balance": 50,
       "createdAt": "2025-10-14T20:39:34.164Z"
+    },
+    {
+      "id": "yjC2ZBgDoO6ExhyWggVh3",
+      "userId": "A-ErMieEmahQy1FszRfuT",
+      "type": "corrente",
+      "balance": 20,
+      "createdAt": "2025-10-15T00:06:12.035Z"
     }
   ],
   "transactions": [
-    {
-      "id": "_z_CJCcXlq87ZNM_7sPbR",
-      "accountId": "BrGJqnYFFsDYjX19zgCk4",
-      "type": "withdraw",
-      "amount": 50,
-      "description": "saque",
-      "toAccountId": null,
-      "date": "2025-10-14T22:09:14.242Z"
-    },
-    {
-      "id": "dMyQ5tRY8J7QbeLG9r_uD",
-      "accountId": "BrGJqnYFFsDYjX19zgCk4",
-      "type": "withdraw",
-      "amount": 50,
-      "description": "saque",
-      "toAccountId": null,
-      "date": "2025-10-14T22:10:28.213Z"
-    },
-    {
-      "id": "DshnVazNODRkQDFsYfA7_",
-      "accountId": "BrGJqnYFFsDYjX19zgCk4",
-      "type": "deposit",
-      "amount": 50,
-      "description": "deposito",
-      "toAccountId": null,
-      "date": "2025-10-14T22:16:26.084Z"
-    },
     {
       "id": "05K1wE7UJURsgD4FCXST_",
       "accountId": "BrGJqnYFFsDYjX19zgCk4",
@@ -65,6 +45,24 @@
       "description": "saque",
       "toAccountId": null,
       "date": "2025-10-14T22:16:34.805Z"
+    },
+    {
+      "id": "ZqRWEh2uDp39LjKcFpwbz",
+      "accountId": "yjC2ZBgDoO6ExhyWggVh3",
+      "type": "deposit",
+      "amount": 50,
+      "description": "deposito",
+      "toAccountId": null,
+      "date": "2025-10-15T00:06:28.591Z"
+    },
+    {
+      "id": "z45nfuQqr5Li-imWRpRb-",
+      "accountId": "yjC2ZBgDoO6ExhyWggVh3",
+      "type": "transfer",
+      "amount": 30,
+      "description": "tranferencia",
+      "toAccountId": "BrGJqnYFFsDYjX19zgCk4",
+      "date": "2025-10-15T00:07:19.602Z"
     }
   ]
 }

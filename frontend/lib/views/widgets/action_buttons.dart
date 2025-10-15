@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:open_banking_app/utils/app_colors.dart';
-import 'package:open_banking_app/utils/button_styled.dart';
+import 'package:open_banking_app/utils/decoration_styled.dart';
 import 'operation_modal.dart';
 
 class ActionButtons extends StatelessWidget {

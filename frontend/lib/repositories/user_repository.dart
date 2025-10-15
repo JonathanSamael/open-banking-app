@@ -33,7 +33,7 @@ class UserRepository {
     }
   }
 
-  Future<UserModel> getUserById({required String id}) async {
+  Future<UserModel> getUserById(String? token, {required String id}) async {
     try {
       final response = await client.get(
         '/users/$id',
