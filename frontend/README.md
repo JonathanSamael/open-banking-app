@@ -38,20 +38,21 @@ Cadastro → Criação de novo usuário e conta
 
 Home → Exibição de saldo e operações (depósito, saque, transferência)
 
-<p align="center">
+<div align="center">
+
   <figure style="display:inline-block; text-align:center; margin:10px;">
-    <img src="assets/screens/login.png" width="200"/>
-    <figcaption><b>Login</b></figcaption>
+    <img src="assets/screens/login.png" width="200" />
   </figure>
+
   <figure style="display:inline-block; text-align:center; margin:10px;">
-    <img src="assets/screens/register.png" width="200"/>
-    <figcaption><b>Cadastro</b></figcaption>
+    <img src="assets/screens/register.png" width="200" />
   </figure>
+
   <figure style="display:inline-block; text-align:center; margin:10px;">
-    <img src="assets/screens/home.png" width="200"/>
-    <figcaption><b>Home</b></figcaption>
+    <img src="assets/screens/home.png" width="200" />
   </figure>
-</p>
+
+</div>
 
 
 ### Gerenciamento de Estado
