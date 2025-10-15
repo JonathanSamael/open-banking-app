@@ -4,6 +4,7 @@ import 'package:open_banking_app/providers/account_provider.dart';
 import 'package:open_banking_app/providers/login_provider.dart';
 import 'package:open_banking_app/utils/app_colors.dart';
 import 'package:open_banking_app/utils/decoration_styled.dart';
+import 'package:open_banking_app/utils/validators.dart';
 import 'package:open_banking_app/views/home_page.dart';
 import '../../providers/user_provider.dart';
 
@@ -64,7 +65,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
           .read(accountProvider.notifier)
           .createAccount(token, accountBody);
 
-      await ref.read(userProvider.notifier).getUserById(token: token, id: userId);
+      await ref
+          .read(userProvider.notifier)
+          .getUserById(token: token, id: userId);
       await ref.read(accountProvider.notifier).getAccountById(id: userId);
 
       if (mounted) {
@@ -122,7 +125,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       label: 'Nome',
                     ),
                     validator: (value) => value == null || value.isEmpty
-                        ? 'Informe o nome'
+                        ? 'Informe um nome'
                         : null,
                   ),
                   const SizedBox(height: 16),
@@ -133,9 +136,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       label: 'Email',
                     ),
                     keyboardType: TextInputType.emailAddress,
-                    validator: (value) => value == null || value.isEmpty
-                        ? 'Informe o e-mail'
-                        : null,
+                    validator: Validators.email,
                   ),
                   const SizedBox(height: 16),
                   TextFormField(
@@ -145,9 +146,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       label: 'Senha',
                     ),
                     obscureText: true,
-                    validator: (value) => value == null || value.isEmpty
-                        ? 'Informe a senha'
-                        : null,
+                    validator: Validators.strongPassword,
                   ),
                   const SizedBox(height: 32),
                   ElevatedButton(

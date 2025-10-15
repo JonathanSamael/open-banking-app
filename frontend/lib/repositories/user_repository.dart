@@ -10,10 +10,7 @@ class UserRepository {
 
   Future<List<UserModel>> getAllUsers() async {
     try {
-      final response = await client.get(
-        '/users',
-        authToken: token,
-      );
+      final response = await client.get('/users', authToken: token);
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> jsonData = jsonDecode(response.body);
@@ -35,10 +32,7 @@ class UserRepository {
 
   Future<UserModel> getUserById(String? token, {required String id}) async {
     try {
-      final response = await client.get(
-        '/users/$id',
-        authToken: token,
-      );
+      final response = await client.get('/users/$id', authToken: token);
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> jsonData = jsonDecode(response.body);
@@ -55,10 +49,7 @@ class UserRepository {
 
   Future<UserModel> createUser({required Map<String, dynamic> body}) async {
     try {
-      final response = await client.post(
-        '/users',
-        body: body,
-      );
+      final response = await client.post('/users', body: body);
 
       if (response.statusCode == 201 || response.statusCode == 200) {
         final Map<String, dynamic> jsonData = jsonDecode(response.body);
@@ -97,20 +88,13 @@ class UserRepository {
     }
   }
 
-  Future<void> deleteUser({required String id}) async {
-    try {
-      final response = await client.delete(
-        '/users/$id',
-        authToken: token,
-      );
+  Future<void> deleteUser(String token, {required String id}) async {
+    final response = await client.delete('/users/$id', authToken: token);
 
-      if (response.statusCode != 200 && response.statusCode != 204) {
-        throw Exception(
-          'Erro ao deletar usuário $id. Status code: ${response.statusCode}',
-        );
-      }
-    } catch (e) {
-      throw Exception('Falha na requisição deleteUser: $e');
+    if (response.statusCode != 200 && response.statusCode != 204) {
+      throw Exception(
+        'Erro ao deletar conta $id. Status: ${response.statusCode}',
+      );
     }
   }
 }

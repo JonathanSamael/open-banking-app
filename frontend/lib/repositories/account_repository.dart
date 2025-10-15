@@ -43,7 +43,6 @@ class AccountRepository {
   }
 
   Future<void> deleteAccount({
-    required String token,
     required String id,
   }) async {
     final response = await client.delete('/accounts/$id', authToken: token);

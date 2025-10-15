@@ -13,13 +13,17 @@ ButtonStyle buttonStyled(BuildContext context, {Color? background}) {
     );
   }
 
-  InputDecoration inputDecoration({
+  InputDecoration inputDecoration(
+    {
     required IconData icon,
     required String label,
-  }) {
+    Widget? suffixIcon,
+  }
+  ) {
     return InputDecoration(
       prefixIcon: Icon(icon, color: AppColors.inputElements),
       label: Text(label, style: TextStyle(color: AppColors.inputElements)),
+      suffixIcon: suffixIcon,
       filled: true,
       fillColor: AppColors.cardColor,
       contentPadding: const EdgeInsets.symmetric(horizontal: 12),
