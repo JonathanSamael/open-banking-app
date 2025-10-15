@@ -26,7 +26,7 @@ class AccountNotifier extends AsyncNotifier<AccountModel?> {
   Future<void> createAccount(String token, Map<String, dynamic> body) async {
     state = const AsyncLoading();
     try {
-      final account = await _repository.createAccount(body: body);
+      final account = await _repository.createAccount(token: token, body: body);
       state = AsyncData(account);
     } catch (e, st) {
       state = AsyncError(e, st);

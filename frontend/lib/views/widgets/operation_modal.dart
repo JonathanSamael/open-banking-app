@@ -4,7 +4,7 @@ import 'package:open_banking_app/providers/account_provider.dart';
 import 'package:open_banking_app/providers/transaction_provider.dart';
 import 'package:open_banking_app/providers/user_provider.dart';
 import 'package:open_banking_app/utils/app_colors.dart';
-import 'package:open_banking_app/utils/button_styled.dart';
+import 'package:open_banking_app/utils/decoration_styled.dart';
 
 class OperationModal extends ConsumerStatefulWidget {
   final String type;

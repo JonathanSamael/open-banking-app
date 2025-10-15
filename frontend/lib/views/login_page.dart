@@ -1,12 +1,12 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:open_banking_app/providers/account_provider.dart';
 import 'package:open_banking_app/providers/login_provider.dart';
 import 'package:open_banking_app/providers/user_provider.dart';
 import 'package:open_banking_app/utils/app_colors.dart';
+import 'package:open_banking_app/utils/decoration_styled.dart';
 import 'package:open_banking_app/views/home_page.dart';
+import 'package:open_banking_app/views/register_page.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
@@ -33,142 +33,91 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
     return Scaffold(
       backgroundColor: AppColors.backgroundColorDark,
-      body: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "Open Banking App",
-                style: TextStyle(
-                  fontSize: 28,
-                  color: AppColors.backgroundColorLight,
-                ),
-              ),
-              SizedBox(height: 80),
-              TextFormField(
-                controller: _emailController,
-                decoration: InputDecoration(
-                  prefixIcon: Icon(
-                    Icons.email_outlined,
-                    color: AppColors.inputElements,
-                  ),
-                  label: Text(
-                    "Email",
-                    style: TextStyle(color: AppColors.inputElements),
-                  ),
-                  filled: true,
-                  fillColor: AppColors.cardColor,
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: const BorderSide(
-                      color: AppColors.accentColor,
-                      width: 2,
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Open Banking App",
+                    style: TextStyle(
+                      fontSize: 28,
+                      color: AppColors.backgroundColorLight,
                     ),
                   ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: const BorderSide(
-                      color: AppColors.accentColor,
-                      width: 2,
+                  SizedBox(height: 80),
+                  TextFormField(
+                    controller: _emailController,
+                    decoration: inputDecoration(
+                      icon: Icons.email_outlined,
+                      label: 'Email',
                     ),
+                    keyboardType: TextInputType.emailAddress,
+                    validator: (value) => value == null || value.isEmpty
+                        ? 'Informe o e-mail'
+                        : null,
                   ),
-                  errorBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: const BorderSide(
-                      color: AppColors.errorColor,
-                      width: 2,
+                  const SizedBox(height: 16),
+                  TextFormField(
+                    controller: _passwordController,
+                    decoration: inputDecoration(
+                      icon: Icons.lock_outline_rounded,
+                      label: 'Senha',
                     ),
+                    obscureText: true,
+                    validator: (value) => value == null || value.isEmpty
+                        ? 'Informe a senha'
+                        : null,
                   ),
-                ),
-                keyboardType: TextInputType.emailAddress,
-                validator: (value) =>
-                    value == null || value.isEmpty ? 'Informe o e-mail' : null,
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                controller: _passwordController,
-                decoration: InputDecoration(
-                  prefixIcon: Icon(
-                    Icons.lock_outline_rounded,
-                    color: AppColors.inputElements,
-                  ),
-                  suffixIcon: InkWell(
-                    onTap: togglePasswordView,
-                    child: Icon(
-                      isHidden ? Icons.visibility : Icons.visibility_off,
-                      color: AppColors.inputElements,
-                    ),
-                  ),
-                  label: Text(
-                    "Senha",
-                    style: TextStyle(color: AppColors.inputElements),
-                  ),
-                  filled: true,
-                  fillColor: AppColors.cardColor,
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: const BorderSide(
-                      color: AppColors.accentColor,
-                      width: 2,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: const BorderSide(
-                      color: AppColors.accentColor,
-                      width: 2,
-                    ),
-                  ),
-                  errorBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: const BorderSide(
-                      color: AppColors.errorColor,
-                      width: 2,
-                    ),
-                  ),
-                ),
-                obscureText: true,
-                validator: (value) =>
-                    value == null || value.isEmpty ? 'Informe a senha' : null,
-              ),
-              const SizedBox(height: 32),
-              loginState.when(
-                loading: () => const CircularProgressIndicator(),
-                error: (err, _) {
-                  WidgetsBinding.instance.addPostFrameCallback((_) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text("Erro: Tente novamente!"),
-                        backgroundColor: AppColors.errorColor,
-                        duration: Durations.extralong1,
-                      ),
-                    );
-                  });
+                  const SizedBox(height: 32),
+                  loginState.when(
+                    loading: () => const CircularProgressIndicator(),
+                    error: (err, _) {
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text("Erro: Tente novamente!"),
+                            backgroundColor: AppColors.errorColor,
+                            duration: Durations.extralong1,
+                          ),
+                        );
+                      });
 
-                  // Mostra o botão mesmo em caso de erro
-                  return _buildLoginButton(context, ref);
-                },
-                data: (_) => _buildLoginButton(context, ref),
-              ),
-              SizedBox(height: 40),
-              TextButton(
-                onPressed: () {},
-                child: Text(
-                  "Crie sua conta!",
-                  style: TextStyle(
-                    color: AppColors.textColorWhite,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 0.7,
+                      return _buildLoginButton(context, ref);
+                    },
+                    data: (_) => _buildLoginButton(context, ref),
                   ),
-                ),
+                  SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Divider(),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const RegisterScreen(),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      "Crie sua conta",
+                      style: TextStyle(
+                        color: AppColors.textColorWhite,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                        letterSpacing: 0.7,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),
@@ -197,21 +146,10 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           final loggedUser = ref.read(loginProvider);
           if (loggedUser.value != null) {
             final userId = loggedUser.value!.user.id;
-            final token = loggedUser.value!.token;
 
-            final user = await ref
-                .read(userProvider.notifier)
-                .getUserById(id: userId);
-            final account = await ref
-                .read(accountProvider.notifier)
-                .getAccountById(id: userId);
-
-            print(user);
-            print(account);
-
-            final accountData = ref.read(accountProvider);
-
-            print('Usuário carregado: ${accountData} $token');
+            await ref.read(userProvider.notifier).getUserById(id: userId);
+            await ref.read(accountProvider.notifier).getAccountById(id: userId);
+            ref.read(accountProvider);
 
             if (loggedUser.value != null && mounted) {
               ScaffoldMessenger.of(context).showSnackBar(
